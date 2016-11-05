@@ -12,39 +12,39 @@
                           :sep 10
                           :radius 3}))
 
+(defonce ephemeral-state (atom {:width 640
+                                :height 480
+                                :rows 20
+                                :cols 20
+                                :sep 10
+                                :radius 3}))
+
 (defn hello-world []
   [:div {:name "wrapper"}
    [:div {:id "width-height"}
     [:label {:for "width-id"} "width"]
-    [:input {:id "width-id" :type "text" :value "640"}]
+    [:input {:id "width-id" :type "text" :value (:width @ephemeral-state)
+             :on-change #(swap! ephemeral-state assoc :width (-> % .-target .-value))}]
     [:label {:for "height-id"} "height"]
-    [:input {:id "height-id" :type "text" :value "480"}]]
+    [:input {:id "height-id" :type "text" :value (:height @ephemeral-state)
+             :on-change #(swap! ephemeral-state assoc :height (-> % .-target .-value))}]]
    [:div {:id "rows-cols"}
     [:label {:for "rows-id"} "rows"]
-    [:input {:id "rows-id" :type "text" :value "20"}]
+    [:input {:id "rows-id" :type "text" :value (:rows @ephemeral-state)
+             :on-change #(swap! ephemeral-state assoc :rows (-> % .-target .-value))}]
     [:label {:for "cols-id"} "cols"]
-    [:input {:id "cols-id" :type "text" :value "20"}]]
+    [:input {:id "cols-id" :type "text" :value (:cols @ephemeral-state)
+             :on-change #(swap! ephemeral-state assoc :cols (-> % .-target .-value))}]]
    [:div {:id "sep-radius"}
     [:label {:for "sep-id"} "sep"]
-    [:input {:id "sep-id" :type "text" :value "10"}]
+    [:input {:id "sep-id" :type "text" :value (:sep @ephemeral-state)
+             :on-change #(swap! ephemeral-state assoc :sep (-> % .-target .-value))}]
     [:label {:for "radius-id"} "radius"]
-    [:input {:id "radius-id" :type "text" :value "3"}]]
+    [:input {:id "radius-id" :type "text" :value (:radius @ephemeral-state)
+             :on-change #(swap! ephemeral-state assoc :radius (-> % .-target .-value))}]]
    [:div {:id "button"}
     [:input {:type "button" :value "Update"
-             :onClick (fn []
-                        #_(js/alert "Hello!")
-                        (let [newstate {:width (js/parseInt (js/getElementById "width-id"))
-                                        :height (js/parseInt (js/getElementById "height-id"))
-                                        :rows (js/parseInt (js/getElementById "rows-id"))
-                                        :cols (js/parseInt (js/getElementById "cols-id"))
-                                        :sep (js/parseInt (js/getElementById "sep-id"))
-                                        :radius (js/parseInt (js/getElementById "radius-id"))}]
-                          (!swap app-state assoc :width (:width newstate))
-                          (!swap app-state assoc :height (:height newstate))
-                          (!swap app-state assoc :rows (:rows newstate))
-                          (!swap app-state assoc :cols (:cols newstate))
-                          (!swap app-state assoc :sep (:sep newstate))
-                          (!swap app-state assoc :radius (:radius newstate))))}]]
+             :onClick (fn [] (swap! app-state ephemeral-state))}]]
    [:svg {:width (:width @app-state)
           :height (:height @app-state)}
     [:g
