@@ -24,27 +24,27 @@
    [:div {:id "width-height"}
     [:label {:for "width-id"} "width"]
     [:input {:id "width-id" :type "text" :value (:width @ephemeral-state)
-             :on-change #(reset! ephemeral-state update-in [:width] (-> % .-target .-value))}]
+             :on-change #(swap! ephemeral-state assoc :width (-> % .-target .-value))}]
     [:label {:for "height-id"} "height"]
     [:input {:id "height-id" :type "text" :value (:height @ephemeral-state)
-             :on-change #(reset! ephemeral-state update-in [:height] (-> % .-target .-value))}]]
+             :on-change #(swap! ephemeral-state assoc :height (-> % .-target .-value))}]]
    [:div {:id "rows-cols"}
     [:label {:for "rows-id"} "rows"]
     [:input {:id "rows-id" :type "text" :value (:rows @ephemeral-state)
-             :on-change #(reset! ephemeral-state update-in [:rows] (-> % .-target .-value))}]
+             :on-change #(swap! ephemeral-state assoc :rows (-> % .-target .-value))}]
     [:label {:for "cols-id"} "cols"]
     [:input {:id "cols-id" :type "text" :value (:cols @ephemeral-state)
-             :on-change #(reset! ephemeral-state update-in [:cols] (-> % .-target .-value))}]]
+             :on-change #(swap! ephemeral-state assoc :cols (-> % .-target .-value))}]]
    [:div {:id "sep-radius"}
     [:label {:for "sep-id"} "sep"]
     [:input {:id "sep-id" :type "text" :value (:sep @ephemeral-state)
-             :on-change #(reset! ephemeral-state update-in [:sep] (-> % .-target .-value))}]
+             :on-change #(swap! ephemeral-state assoc :sep (-> % .-target .-value))}]
     [:label {:for "radius-id"} "radius"]
     [:input {:id "radius-id" :type "text" :value (:radius @ephemeral-state)
-             :on-change #(reset! ephemeral-state update-in [:radius] (-> % .-target .-value))}]]
+             :on-change #(swap! ephemeral-state assoc :radius (-> % .-target .-value))}]]
    [:div {:id "button"}
     [:input {:type "button" :value "Update"
-             :onClick (fn [] (swap! app-state @ephemeral-state))}]]
+             :onClick (fn [] (swap! app-state (fn [] @ephemeral-state)))}]]
    [:svg {:width (:width @app-state)
           :height (:height @app-state)}
     [:g
